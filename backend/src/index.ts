@@ -7,11 +7,11 @@ app.use(cors())
 app.use(express.json())
 
 const data = [
-  { id: "1", name: "Titanic", genre: "drama", },
-  { id: "2", name: "Star Wars", genre: "sci-fi", },
-  { id: "3", name: "Lord of the rings", genre: "fantasy", },
-  { id: "4", name: "Pulp fiction", genre: "comedy", },
-  { id: "5", name: "Avatar", genre: "sci-fi", },
+  { id: "1", name: "Titanic", genre: "drama", description: "lorem ipsum..." },
+  { id: "2", name: "Star Wars", genre: "sci-fi", description: "lorem ipsum..." },
+  { id: "3", name: "Lord of the rings", genre: "fantasy", description: "lorem ipsum..." },
+  { id: "4", name: "Pulp fiction", genre: "comedy", description: "lorem ipsum..." },
+  { id: "5", name: "Avatar", genre: "sci-fi", description: "lorem ipsum..." },
 ]
 
 const sleep = (seconds: number) =>
@@ -34,7 +34,9 @@ app.get("/api/movies", async (req, res) => {
     return res.sendStatus(500)
   await sleep(2)
   
-  return res.json(data.filter(movie => movie.genre  === query.genre))
+  return res.json(data
+    .filter(movie => movie.genre  === query.genre)
+    .map(({ id, name }) => ({ id, name })))
 })
 
 app.get("/api/movies/:id", async (req, res) => {
